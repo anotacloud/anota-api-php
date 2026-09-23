@@ -103,6 +103,8 @@ cuerpo está vacío). `$fields` / `$field` son arreglos asociativos como
 | 24 | `addWebhook($formId, $url)` | `POST /forms/{formId}/webhooks` |
 | 25 | `deleteWebhook($formId, $webhookId)` | `DELETE /forms/{formId}/webhooks/{webhookId}` |
 
+**El secreto de firma del webhook se muestra una sola vez.** `addWebhook($formId, $url)` devuelve el `secret` completo (`whsec_…`) en su respuesta (`id`, `formId`, `url`, `secret`, `note`): guárdalo en ese momento. `listWebhooks($formId)` nunca lo devuelve: cada fila trae `secretHint` (`whsec_…` más los últimos 4 caracteres, o solo `whsec_…` si el secreto es corto) y `secretNote` en lugar de `secret`. Si lo pierdes, elimina el webhook y vuelve a agregarlo para obtener un secreto nuevo. Consulta [CHANGELOG.md](CHANGELOG.md).
+
 Un recorrido completo y ejecutable está en [`examples/end-to-end.php`](examples/end-to-end.php).
 
 ## Errores
